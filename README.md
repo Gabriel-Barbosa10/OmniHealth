@@ -72,3 +72,11 @@ A API estará disponível em `https://localhost:5001` e o Swagger em `https://lo
 - **Médico** — prontuários, diagnósticos, prescrições, exames
 - **Funcionário Administrativo** — agendamentos, internações, relatórios
 - **Farmacêutico** — estoque por lote, dispensação, alertas de validade
+
+
+
+
+
+
+
+teste gabriel

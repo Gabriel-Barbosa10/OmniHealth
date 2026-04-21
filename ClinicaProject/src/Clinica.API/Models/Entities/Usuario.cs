@@ -127,7 +127,7 @@ namespace Clinica.API.Models.Entities
             //Verificando se todos os dígitos são iguais
             bool verificarDigitosIguais=cpf.All(c=>c==cpf[0]);
 
-            if(verificarDigitosIguais is false)
+            if(verificarDigitosIguais is true)
             {
                 return false;
             }

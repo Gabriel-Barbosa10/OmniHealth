@@ -5,10 +5,7 @@ using System.Text.RegularExpressions;
 using Clinica.API.Models.Entities;
 using Microsoft.Data.Sqlite;
 
-public class UsuarioContext : DbConnect
-{
-public DbSet<UsuarioContext> {get:set}}
-
+public class Data(){
 static string connectionString= "Server=localhost;Database=AgendaiFisio";
 static var bancoConexao=new SqliteConnection(connectionString);
 
@@ -23,6 +20,10 @@ public static bool VerificarEmail(string email)
 {
 
     email=email.Trim();
+    
+
+
+    return false;
 
 }
 
@@ -30,4 +31,5 @@ public static bool VerificarEmail(string email)
 
 public static void FecharConexao(){
     bancoConexao.Close();
+}
 }

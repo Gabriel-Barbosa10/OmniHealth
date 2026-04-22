@@ -7,7 +7,7 @@ using Microsoft.Data.Sqlite;
 
 public class Data(){
 static string connectionString= "Server=localhost;Database=AgendaiFisio";
-static var bancoConexao=new SqliteConnection(connectionString);
+static SqliteConnection bancoConexao=new SqliteConnection(connectionString);
 
 public static void AbrirConexao()
 
@@ -18,15 +18,16 @@ public static void AbrirConexao()
 
 public static bool VerificarEmail(string email)
 {
-
-    email=email.Trim();
+    //Comando em QUERY para verificar a existência do E-mail de verificação
+    string comando= $"SELECT EXISTS(SELECT 1 FROM usuario WHERE email= '{email}'";
+    //Convertendo a string em comando
+    SqliteCommand comandoConsultarEmail=new SqliteCommand(comando);
     
-
-
-    return false;
+    //Retorna True ou False (Fazendo conversão pois o método retorna 1 ou 0)
+    //Necessário que a conexão esteja aberta
+    return Convert.ToBoolean(comandoConsultarEmail.ExecuteReader());
 
 }
-
 
 
 public static void FecharConexao(){

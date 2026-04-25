@@ -71,7 +71,7 @@ window.onload = function() {
         inputData.onchange = () => buscarHorarios(selectTerapeutaModal.value, inputData.value);
     }
 
-    // 4. LÓGICA DO TOAST
+    // 4. LÓGICA DO TOAST/ERRO USUARIO AO CONFIRMAR SEM PREENCHER DADOS
     window.mostrarToast = function() {
         if (!toast) return;
         toast.classList.add("show");

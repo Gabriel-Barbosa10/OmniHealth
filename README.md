@@ -6,5 +6,6 @@
 3. Rode `dotnet ef database update` para criar o banco MySQL.
 4. Rode `dotnet run` para subir a API.
 
+
 ### 🌐 Como rodar o Front-End:
 1. Use a extensão "Live Server" do VS Code no arquivo `cd src/Clinica.Web/index.html` ou `cd clinicaproject/src/Clinica.Web/index.html`.

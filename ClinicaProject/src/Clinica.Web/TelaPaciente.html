@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="TelaPaciente.css">
+    <title>Minha Saúde - FisioPlan</title>
+</head>
+<body>
+    <div class="titulo-pagina">Minha Saúde</div>
+
+    <main class="card-info">
+        <h2>Davi Gusmão</h2>
+        <!-- Onde aparece a consulta marcada ou o aviso de vazio -->
+        <div id="statusConsulta" style="margin: 20px 0;">
+            <p style="color: gray;">Nenhuma sessão agendada.</p>
+        </div>
+        <button id="btnAbrir" class="btn-primario">Agendar Sessão</button>
+    </main>
+
+    <!-- MODAL 1: Cadastro de Agendamento -->
+    <dialog id="modalAgenda" class="modal-moderno">
+        <div style="padding: 30px;">
+            <h3>Nova Sessão</h3>
+            <label>Escolha o Fisioterapeuta</label>
+            <select id="selectTerapeuta" class="input-moderno">
+                <option value="">Selecione...</option>
+                <option value="Dr. Davi Gusmão (Esportiva)">Dr. Davi Gusmão (Esportiva)</option>
+                <option value="Dra. Ana Freitas (RPG)">Dra. Ana Freitas (RPG)</option>
+            </select>
+
+            <label>Selecione a Data</label>
+            <input type="date" id="dataAgendamento" class="input-moderno">
+
+            <label>Horários Disponíveis (Verde = Livre | Cinza = Ocupado)</label>
+            <div id="containerHorarios" class="horarios-grid"></div>
+
+            <div style="margin-top: 25px; display: flex; gap: 10px;">
+                <button onclick="document.getElementById('modalAgenda').close()" class="btn-cancelar">Voltar</button>
+                <button id="confirmar" class="btn-primario">Confirmar Consulta</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- MODAL 2: Confirmação de Sucesso -->
+    <dialog id="modalSucesso" class="modal-moderno">
+        <div style="padding: 40px; text-align: center;">
+            <div style="font-size: 3rem; color: #0d9488;">✓</div>
+            <h2 style="margin-bottom: 20px;">Agendado com Sucesso!</h2>
+            <div id="dadosConfirmados" class="resumo-sucesso"></div>
+            <button id="btnEntendido" class="btn-primario" style="width: 100%;">Entendido</button>
+        </div>
+    </dialog>
+
+    <!-- MODAL 3: Confirmação de Cancelamento -->
+    <dialog id="modalAvisoCancel" class="modal-moderno">
+        <div style="padding: 30px; text-align: center;">
+            <h3 style="color: #ef4444;">Desmarcar Consulta?</h3>
+            <p style="margin: 15px 0; color: #64748b;">Deseja realmente desmarcar a consulta com o terapeuta?</p>
+            <div style="display: flex; gap: 10px;">
+                <button onclick="document.getElementById('modalAvisoCancel').close()" class="btn-cancelar">Não, Manter</button>
+                <button id="confirmarCancelamento" class="btn-primario" style="background: #ef4444;">Sim, Desmarcar</button>
+            </div>
+        </div>
+    </dialog>
+
+    <script src="TelaPaciente.js"></script>
+</body>
+</html>

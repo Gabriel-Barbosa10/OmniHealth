@@ -1,433 +1,282 @@
 /* ============================================================
-   1. MODERN DESIGN SYSTEM (OKLCH & TOKENS)
+   1. DESIGN SYSTEM - FISIOTERAPIA (CORES E TOKENS)
 ============================================================ */
 :root {
-    /* Usando OKLCH para cores mais ricas e consistentes */
-    --p-marca: oklch(75% 0.15 145);      /* Verde suave moderno */
-    --p-marca-dark: oklch(65% 0.15 145);
-    --p-medico: oklch(60% 0.12 250);     /* Azul profissional */
+    --primary-grad: linear-gradient(135deg, #0d9488 0%, #2dd4bf 100%);
+    --success-grad: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+    --primary-solid: #0d9488;
+    --primary-light: #ccfbf1;
     
-    --bg-app: oklch(98% 0.01 240);       /* Cinza "off-white" moderno */
+    --bg: #f0fdfa;
     --branco: #ffffff;
-    --texto: oklch(25% 0.02 240);
-    --texto-light: oklch(55% 0.02 240);
-    --borda: oklch(92% 0.02 240);
+    --text-main: #134e4a;
+    --text-light: #5f7d7b;
     
-    /* Efeitos */
-    --radius-xl: 32px;
-    --radius-lg: 18px;
-    --shadow-soft: 0 10px 30px -10px oklch(0% 0 0 / 0.05);
-    --shadow-float: 0 25px 50px -12px oklch(0% 0 0 / 0.15);
-    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --radius-lg: 24px;
+    --radius-md: 14px;
+    --shadow-color: rgba(13, 148, 136, 0.15);
+    --shadow-vibrant: 0 20px 40px -10px var(--shadow-color);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ============================================================
-   2. RESET & BASE
+   2. RESET & LAYOUT
 ============================================================ */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
 body {
-    background-color: var(--bg-app);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    color: var(--texto);
+    background: radial-gradient(circle at top right, #e2f2f0, var(--bg));
+    color: var(--text-main);
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 60px 20px;
+    min-height: 100vh;
     -webkit-font-smoothing: antialiased;
 }
 
 .titulo-pagina {
-    font-size: 0.8rem;
-    font-weight: 800;
-    color: var(--texto-light);
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
+    font-size: 2rem;
+    font-weight: 850;
     margin-bottom: 50px;
-    opacity: 0.8;
+    letter-spacing: -1px;
+    background: var(--primary-grad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.Agendamento {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+    width: 100%;
+    max-width: 1100px;
 }
 
 /* ============================================================
-   3. CARDS PRINCIPAIS (DASHBOARD)
+   3. CARDS (ESTILO CLÍNICO)
 ============================================================ */
-.Agendamento {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-    gap: 32px;
-    width: 100%;
-    max-width: 1200px;
-}
-
 .card-info {
     background: var(--branco);
-    padding: 40px;
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-soft);
-    border: 1px solid var(--borda);
-    position: relative;
+    padding: 35px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-vibrant);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     transition: var(--transition);
+    position: relative;
+    overflow: hidden;
 }
 
 .card-info:hover {
     transform: translateY(-8px);
-    box-shadow: var(--shadow-float);
-    border-color: var(--p-marca);
 }
 
-/* Indicador dinâmico */
-.indicador {
+.card-info::before {
+    content: "";
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 8px;
-    background: var(--p-marca);
-    border-radius: 32px 32px 0 0;
+    top: 0; left: 0; width: 6px; height: 100%;
+    background: var(--primary-grad);
 }
 
-.terapeuta .indicador { background: var(--p-medico); }
-.terapeuta:hover { border-color: var(--p-medico); }
+.badge-status {
+    background: var(--primary-light);
+    color: #0f766e;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 15px;
+    border: 1px solid #99f6e4;
+}
 
-h2 { font-size: 1.8rem; font-weight: 850; letter-spacing: -0.03em; margin-bottom: 24px; }
-
-/* Grupos de Ação */
-.acao-grupo { display: flex; gap: 12px; margin-top: 30px; }
-
-.select-moderno, .input-data {
-    flex: 2;
-    padding: 14px 20px;
-    border-radius: var(--radius-lg);
-    border: 2px solid var(--borda);
-    background: var(--bg-app);
+/* ============================================================
+   4. INPUTS E BOTÕES
+============================================================ */
+.input-moderno {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: var(--radius-md);
+    border: 2px solid #e2e8f0;
+    background: #fff;
     font-size: 1rem;
     font-weight: 600;
-    color: var(--texto);
-    outline: none;
     transition: var(--transition);
-}
-
-.select-moderno:focus {
-    border-color: var(--p-medico);
-    background: var(--branco);
-    box-shadow: 0 0 0 4px oklch(60% 0.12 250 / 0.1);
+    margin-bottom: 15px;
+    color: var(--text-main);
 }
 
 .btn-primario {
-    flex: 1;
-    background: var(--texto);
+    background: var(--primary-grad);
     color: white;
     border: none;
-    padding: 14px 28px;
-    border-radius: var(--radius-lg);
+    padding: 16px 30px;
+    border-radius: var(--radius-md);
     font-weight: 700;
     cursor: pointer;
     transition: var(--transition);
 }
 
-.btn-primario:hover {
-    background: #000;
-    transform: scale(1.03);
-    box-shadow: 0 10px 20px -5px oklch(0% 0 0 / 0.2);
-}
-
 /* ============================================================
-   4. MODAL DE AGENDAMENTO (ULTRA MODERN)
+   5. MODAIS E TOAST INTERNO (SEM BORRÃO)
 ============================================================ */
-dialog::backdrop {
-    background: oklch(15% 0.02 240 / 0.3);
-    backdrop-filter: blur(12px); /* Efeito de vidro desfocado */
-}
-
 .modal-moderno {
     border: none;
-    border-radius: 40px;
+    border-radius: 20px;
     padding: 0;
     width: 95%;
     max-width: 550px;
-    background: var(--branco);
-    box-shadow: var(--shadow-float);
-    overflow: hidden;
-    animation: modalShow 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin: auto;
+    position: relative; /* Necessário para o toast interno se posicionar */
+    box-shadow: 0 40px 100px -20px rgba(0,0,0,0.3);
 }
 
-.modal-header {
-    background: linear-gradient(to bottom, var(--bg-app), var(--branco));
-    padding: 32px;
-    border-bottom: 1px solid var(--borda);
+.modal-moderno::backdrop {
+    background: rgba(19, 78, 74, 0.4);
+    backdrop-filter: blur(10px);
 }
 
-.modal-header h2 { margin-bottom: 0; font-size: 1.5rem; text-align: center; }
-
-.modal-body { padding: 32px; }
-
-.passo { margin-bottom: 24px; }
-
-.passo label {
-    display: block;
-    font-size: 0.75rem;
-    font-weight: 800;
-    color: var(--texto-light);
-    margin-bottom: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+/* TOAST INTERNO: Aparece dentro do Modal, nítido e sem borrão */
+.toast-interno {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    width: 90%;
+    background: white;
+    padding: 12px 20px;
+    border-radius: 16px;
+    display: none; /* Controlado pelo JS */
+    align-items: center;
+    gap: 12px;
+    z-index: 100;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid #fee2e2;
+    transition: var(--transition);
 }
 
-/* Grid de Horários (Estilo Chips) */
+.toast-visible {
+    display: flex !important;
+    transform: translateX(-50%) translateY(0);
+    animation: shake 0.4s ease-in-out;
+}
+
+.modal-header { padding: 35px; background: var(--primary-grad); color: white; text-align: center; }
+.modal-body { padding: 35px; }
+
 .horarios-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 12px;
+    margin-top: 15px;
 }
 
 .btn-hora {
-    all: unset;
-    cursor: pointer;
-    text-align: center;
-    padding: 12px 5px;
+    padding: 12px;
     border-radius: 12px;
-    background: var(--bg-app);
+    border: 2px solid #f1f5f9;
+    background: #fff;
+    cursor: pointer;
     font-weight: 700;
-    font-size: 0.9rem;
-    border: 2px solid transparent;
-    transition: var(--transition);
+    color: var(--text-light);
 }
-
-.btn-hora:hover { border-color: var(--p-marca); color: var(--p-marca); }
 
 .btn-hora.selecionado {
-    background: var(--p-marca);
+    background: var(--primary-solid);
     color: white;
-    border-color: var(--p-marca);
-    box-shadow: 0 8px 15px -5px oklch(75% 0.15 145 / 0.4);
+    border-color: var(--primary-solid);
 }
-
-/* Footer do Modal */
-.botoes-footer {
-    display: grid;
-    grid-template-columns: 1fr 1.3fr;
-    gap: 16px;
-    margin-top: 40px;
-}
-
-.btn-confirmar {
-    background: var(--p-marca);
-    color: white;
-    border: none;
-    padding: 18px;
-    border-radius: 18px;
-    font-weight: 800;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.btn-confirmar:hover {
-    background: var(--p-marca-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 15px 30px -10px oklch(75% 0.15 145 / 0.5);
-}
-
-.btn-cancelar {
-    background: oklch(95% 0.02 240);
-    color: var(--texto-light);
-    border: none;
-    padding: 18px;
-    border-radius: 18px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.btn-cancelar:hover { background: oklch(90% 0.02 240); color: var(--texto); }
 
 /* ============================================================
-   5. NOTIFICAÇÕES & ANIMAÇÕES
+   6. SUCESSO E ANIMAÇÕES
 ============================================================ */
-@keyframes modalShow {
-    from { opacity: 0; transform: scale(0.9) translateY(30px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
+/* Container de Resumo Modernizado */
+/* Container Principal do Modal de Sucesso */
+.modal-moderno.success-variant {
+    padding: 50px 40px; /* Aumentei o espaço interno (cima/baixo e lados) */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza tudo horizontalmente */
+    text-align: center;
+}
+
+/* Ícone de Check centralizado e com espaço */
+.icon-check {
+    margin-bottom: 25px;
+    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+}
+
+/* Título da Sessão */
+.modal-moderno h2 {
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+    color: var(--text-main);
+}
+
+/* Ajuste no Quadro de Resumo (Onde estão os dados) */
+.resumo-sucesso {
+    width: 100%; /* Garante que ocupe a largura disponível com respiro */
+    max-width: 420px; /* Evita que fique largo demais em telas grandes */
+    background: var(--branco);
+    padding: 35px;
+    border-radius: 24px;
+    border: 1px solid #e2f2f0;
+    box-shadow: var(--shadow-vibrant);
+    margin-bottom: 40px; /* Espaço generoso antes do botão */
+    
+    /* Alinhamento interno dos itens */
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Espaçamento entre as linhas (Paciente, Médico, etc) */
+}
+
+/* Estilo de cada linha de informação */
+.resumo-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o texto de cada info */
+    gap: 8px;
+}
+
+.resumo-item strong {
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    color: var(--text-light); /* Cor mais suave para o rótulo */
+}
+
+.resumo-item p {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary-solid); /* Destaque na cor da fisioterapia */
+}
+.modal-moderno.success-variant .btn-primario {
+    width: 100%;
+    max-width: 300px; /* Botão centralizado e não tão largo */
+    padding: 18px;
+    border-radius: 18px;
+    font-size: 1rem;
+}
+/* No seu CSS, remova qualquer display fixo do dialog de sucesso */
+#modalSucesso {
+    display: none; /* Oculta por padrão */
+}
+
+/* Quando o navegador abre o dialog pelo JS, ele usa display: block internamente */
+#modalSucesso[open] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(-50%); }
+    25% { transform: translateX(-52%); }
+    75% { transform: translateX(-48%); }
 }
 
 @keyframes slideIn {
     from { transform: translateX(100%); opacity: 0; }
     to { transform: translateX(0); opacity: 1; }
 }
-
-.toast-moderno {
-    position: fixed;
-    top: 30px;
-    right: 30px;
-    background: white;
-    padding: 20px 30px;
-    border-radius: 20px;
-    box-shadow: var(--shadow-float);
-    border-left: 6px solid oklch(60% 0.15 25); /* Vermelho erro */
-    z-index: 9999;
-}
-/* ============================================================
-   MODAL DE PRONTUÁRIO REFORMULADO (CENTRALIZADO)
-============================================================ */
-
-/* Estilo Base do Dialog para Prontuário */
-.prontuario-modal {
-    border: none;
-    border-radius: 32px;
-    padding: 0;
-    width: 95%;
-    max-width: 650px;
-    background: var(--branco);
-    box-shadow: 0 40px 100px -20px rgba(0,0,0,0.25);
-    overflow: hidden;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Centralização absoluta perfeita */
-    margin: 0; /* Remove margens padrões do browser */
-}
-
-/* Header Limpo e Espaçado */
-.modal-header-clean {
-    padding: 2.5rem 3rem 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    background: linear-gradient(to bottom, var(--bg-app), transparent);
-}
-
-.paciente-tag {
-    font-size: 0.7rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: var(--brand);
-    background: var(--brand-soft);
-    padding: 6px 14px;
-    border-radius: 100px;
-    display: inline-block;
-    margin-bottom: 8px;
-}
-
-.modal-header-clean h2 {
-    font-size: 2.2rem;
-    font-weight: 900;
-    margin: 0;
-    color: var(--texto);
-    letter-spacing: -1.5px;
-}
-
-/* Corpo com foco na escrita */
-.modal-body-prontuario {
-    padding: 1rem 3rem 2.5rem;
-}
-
-/* Linha de Dados (Última sessão / Status) */
-.info-row {
-    display: flex;
-    gap: 40px;
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    background: var(--bg-app);
-    border-radius: 20px;
-}
-
-.info-group label {
-    display: block;
-    font-size: 0.7rem;
-    color: var(--texto-muted);
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 4px;
-}
-
-.info-group span {
-    font-weight: 700;
-    color: var(--texto);
-    font-size: 0.95rem;
-}
-
-.status-verde {
-    color: #16a34a !important;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-/* Área de Texto Evoluída */
-.campo-evolucao label {
-    display: block;
-    font-weight: 800;
-    font-size: 0.9rem;
-    margin-bottom: 12px;
-    color: var(--texto);
-}
-
-.input-prontuario {
-    width: 100%;
-    min-height: 220px;
-    padding: 1.5rem;
-    border-radius: 20px;
-    border: 2px solid var(--border);
-    background: #fcfcfd;
-    font-family: inherit;
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--texto);
-    resize: vertical;
-    transition: var(--transition);
-}
-
-.input-prontuario:focus {
-    outline: none;
-    border-color: var(--brand);
-    background: #fff;
-    box-shadow: 0 10px 30px -10px var(--brand-soft);
-}
-
-/* Rodapé com Botões de Ação Dinâmicos */
-.modal-footer-flex {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 2.5rem;
-}
-
-.btn-descartar {
-    background: #f1f5f9;
-    color: var(--texto-muted);
-    border: none;
-    padding: 14px 24px;
-    border-radius: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.btn-descartar:hover { background: #fee2e2; color: #ef4444; }
-
-.btn-confirmar-prontuario {
-    background: var(--texto); /* Estilo Dark Mode Button */
-    color: white;
-    border: none;
-    padding: 14px 36px;
-    border-radius: 14px;
-    font-weight: 800;
-    cursor: pointer;
-    transition: var(--transition);
-    box-shadow: 0 10px 20px -5px rgba(0,0,0,0.2);
-}
-
-.btn-confirmar-prontuario:hover {
-    background: var(--brand);
-    transform: translateY(-2px);
-    box-shadow: 0 15px 30px -10px var(--brand-soft);
-}
-
-/* Ícone de Fechar no Canto */
-.btn-close-icon {
-    all: unset;
-    font-size: 1.8rem;
-    color: var(--texto-muted);
-    cursor: pointer;
-    transition: 0.2s;
-    line-height: 1;
-}
-
-.btn-close-icon:hover { color: #000; transform: rotate(90deg); }

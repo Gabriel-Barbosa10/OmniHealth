@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="TelaTerapeuta.css">
+    <title>Painel do Especialista - FisioPlan</title>
+</head>
+<body>
+    <div class="titulo-pagina">Gestão de Agenda</div>
+
+    <main class="container-mestre">
+        <!-- COLUNA 1: BLOQUEIO POR DATA -->
+        <section class="card-info">
+            <h2>Configurar Disponibilidade</h2>
+            <div class="seletor-data">
+                <label>Selecione o Dia para Gerenciar:</label>
+                <input type="date" id="dataGestao" class="input-moderno">
+            </div>
+            <p class="legenda">Clique no cadeado para <strong>Bloquear (🔒)</strong> ou <strong>Liberar (🔓)</strong>.</p>
+            <div id="gridGestao" class="horarios-grid"></div>
+        </section>
+
+        <!-- COLUNA 2: LISTA GERAL (DIA/MÊS) -->
+        <section class="card-info">
+            <h2>Próximos Pacientes</h2>
+            <div id="listaGeralPacientes" class="lista-pacientes-geral">
+                <!-- O JS vai listar todos os agendamentos salvos -->
+            </div>
+        </section>
+    </main>
+
+    <script src="TelaTerapeuta.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+/* ============================================================
+   1. DESIGN SYSTEM - TERAPEUTA
+============================================================ */
+:root {
+    --primary: #0d9488;
+    --danger: #ef4444;
+    --danger-light: #fee2e2;
+    --bg-terapeuta: #f8fafc;
+    --card-border: #e2e8f0;
+    --radius: 20px;
+    --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+/* ============================================================
+   2. RESET & LAYOUT BASE
+============================================================ */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body { 
+    background: var(--bg-terapeuta); 
+    font-family: 'Inter', -apple-system, sans-serif; 
+    padding: 40px; 
+    color: #1e293b;
+}
+
+.titulo-pagina { 
+    font-size: 1.8rem; 
+    font-weight: 800; 
+    color: var(--primary); 
+    margin-bottom: 30px; 
+    text-align: center;
+}
+
+/* Container Mestre em Duas Colunas */
+.container-mestre {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Divide a tela ao meio */
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Responsividade para tablets/celulares */
+@media (max-width: 900px) {
+    .container-mestre {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================================
+   3. CARDS DE INFORMAÇÃO
+============================================================ */
+.card-info { 
+    background: white; 
+    padding: 30px; 
+    border-radius: var(--radius); 
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-soft); 
+}
+
+.card-info h2 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #0f172a;
+}
+
+/* ============================================================
+   4. GRID DE GESTÃO (HORÁRIOS QUEBRADOS)
+============================================================ */
+.horarios-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 colunas para os horários de 30 min */
+    gap: 12px;
+    margin-top: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* Estilo dos Botões de Bloqueio (Cadeados) */
+.btn-gestao {
+    padding: 14px; 
+    border-radius: 12px; 
+    border: 2px solid transparent; 
+    font-weight: 800; 
+    cursor: pointer; 
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.btn-gestao.liberado { 
+    background: #f0fdf4; 
+    color: #166534; 
+    border-color: #dcfce7; 
+}
+
+.btn-gestao.bloqueado { 
+    background: var(--danger-light); 
+    color: #991b1b; 
+    border-color: #fecdd3; 
+}
+
+.btn-gestao:hover {
+    filter: brightness(0.95);
+    transform: translateY(-2px);
+}
+
+/* ============================================================
+   5. LISTA DE PACIENTES GERAL
+============================================================ */
+.paciente-item-geral {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    padding: 15px; 
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.2s;
+}
+
+.paciente-item-geral:hover {
+    background: #f8fafc;
+}
+
+.paciente-item-geral .info strong { 
+    display: block; 
+    color: var(--primary); 
+    font-size: 1.1rem; 
+}
+
+.paciente-item-geral .info span { 
+    color: #64748b; 
+    font-size: 0.85rem; 
+}
+
+/* Badge de Confirmação */
+.status-tag { 
+    background: #dcfce7; 
+    color: #166534; 
+    padding: 6px 12px; 
+    border-radius: 8px; 
+    font-size: 0.7rem; 
+    font-weight: 800; 
+    text-transform: uppercase; 
+}
+
+/* Mensagem de estado vazio */
+.vazio { 
+    text-align: center; 
+    color: #94a3b8; 
+    padding: 60px 20px; 
+    font-style: italic;
+}

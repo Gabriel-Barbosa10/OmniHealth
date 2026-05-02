@@ -2,9 +2,11 @@ namespace Clinica.API.Models.DTOs
 {
     public class UserRegisterDTO
     {
-        public string Name { get; set; }
-        public string Cpf { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string  Nome       { get; set; } = string.Empty;
+        public string  Email      { get; set; } = string.Empty;
+        public string  Password   { get; set; } = string.Empty;
+        public string? Cpf        { get; set; }
+        public bool    AceiteLgpd { get; set; }
+        public string? TipoPerfil { get; set; } = "PACIENTE";
     }
 }

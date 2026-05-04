@@ -18,7 +18,7 @@ namespace Clinica.API.Repositories
         public async Task<Usuario?> BuscarPorEmail(string email)
         {
             const string sql = """
-                SELECT id, nome, email, cpf, senha, tipo_perfil, aceite_lgpd
+                SELECT id, nome, email, cpf, senha, tipo_perfil, data_criacao, ativo, aceite_lgpd
                 FROM usuario
                 WHERE email = @Email
                 LIMIT 1;
@@ -36,10 +36,35 @@ namespace Clinica.API.Repositories
                 nome:        (string)row.nome,
                 email:       (string)row.email,
                 cpf:         (string)row.cpf,
-                senha:       (string)row.senha,
+                senhaHash:   (string)row.senha,
                 tipoPerfil:  (string)row.tipo_perfil,
-                aceiteLgpd:  (int)row.aceite_lgpd
+                dataCriacao: Convert.ToDateTime(row.data_criacao),
+                ativo:       Convert.ToInt32(row.ativo) == 1,
+                aceiteLgpd:  Convert.ToInt32(row.aceite_lgpd) == 1
             );
+        }
+
+        public async Task<bool> CadastrarUsuario(Usuario usuario)
+        {
+            const string sql = @"
+                INSERT INTO usuario 
+                    (nome, email, cpf, senha, tipo_perfil, data_criacao, ativo, aceite_lgpd)
+                VALUES 
+                    (@Nome, @Email, @Cpf, @SenhaHash, @TipoPerfil, @DataCriacao, @Ativo, @AceiteLgpd)";
+
+            using IDbConnection conn = new SqliteConnection(_connectionString);
+            int rowsAffected = await conn.ExecuteAsync(sql, new {
+                usuario.Nome,
+                usuario.Email,
+                usuario.Cpf,
+                usuario.SenhaHash,
+                usuario.TipoPerfil,
+                DataCriacao = usuario.DataCriacao.ToString("yyyy-MM-dd HH:mm:ss"),
+                Ativo = usuario.Ativo ? 1 : 0,
+                AceiteLgpd = usuario.AceiteLgpd ? 1 : 0
+            });
+
+            return rowsAffected > 0;
         }
     }
 }

@@ -43,11 +43,9 @@ namespace Clinica.API.Models.Entities
             {
                 throw new ArgumentException("CPF inválido");
             }
-            // 5. Senha — NOT NULL, min 8, max 20
-            if (string.IsNullOrWhiteSpace(senha))
-                throw new ArgumentException("Senha é obrigatória.");
-            if (senha.Length < 8 || senha.Length > 20)
-                throw new ArgumentException("A senha deve ter entre 8 e 20 caracteres.");
+            // 5. SenhaHash — NOT NULL
+            if (string.IsNullOrWhiteSpace(senhaHash))
+                throw new ArgumentException("Senha criptografada é obrigatória.");
 
             // 6. TipoPerfil — CHECK IN ('PACIENTE', 'TERAPEUTA')
             if (string.IsNullOrWhiteSpace(tipoPerfil))
@@ -70,7 +68,7 @@ namespace Clinica.API.Models.Entities
         }
 
         public static Usuario FromDatabase(int id, string nome, string email, string cpf,
-            string senhaHash, string tipoPerfil, DateTime dataCriacao, bool ativo)
+            string senhaHash, string tipoPerfil, DateTime dataCriacao, bool ativo, bool aceiteLgpd)
         {
             return new Usuario
             {
@@ -80,6 +78,7 @@ namespace Clinica.API.Models.Entities
                 Cpf         = cpf,
                 SenhaHash   = senhaHash,
                 TipoPerfil  = tipoPerfil,
+                AceiteLgpd  = aceiteLgpd,
                 DataCriacao = dataCriacao,
                 Ativo       = ativo
             };

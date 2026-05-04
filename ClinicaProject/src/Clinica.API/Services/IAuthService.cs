@@ -1,11 +1,11 @@
 using Clinica.API.Models.DTOs;
+using System.Threading.Tasks;
 
 namespace Clinica.API.Services
 {
     public interface IAuthService
     {
-        bool    CadastrarUsuario(UserRegisterDTO dados);
-        string? Login(string email, string senha);
-        Task<string?> LoginAsync(LoginRequest request);
+        Task<bool> CadastrarUsuarioAsync(UserRegisterDTO dados);
+        Task<string?> LoginAsync(UserLoginDTO request);
     }
 }

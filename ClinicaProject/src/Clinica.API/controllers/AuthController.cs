@@ -16,22 +16,22 @@ namespace Clinica.API.Controllers
         }
  
         [HttpPost("register")]
-        public IActionResult Register([FromBody] UserRegisterDTO model)
+        public async Task<IActionResult> Register([FromBody] UserRegisterDTO model)
         {
             try
             {
-                var sucesso = _authService.CadastrarUsuario(model);
+                var sucesso = await _authService.CadastrarUsuarioAsync(model);
                 if (!sucesso) return BadRequest("Não foi possível criar o usuário.");
                 return Ok("Usuário criado com sucesso!");
             }
             catch (ArgumentException ex)         { return BadRequest(ex.Message); }
             catch (InvalidOperationException ex) { return Conflict(ex.Message); }
         }
- 
+
         [HttpPost("login")]
-        public IActionResult Login([FromBody] UserLoginDTO model)
+        public async Task<IActionResult> Login([FromBody] UserLoginDTO model)
         {
-            var token = _authService.Login(model.Email, model.Password);
+            var token = await _authService.LoginAsync(model);
             if (token == null) return Unauthorized("E-mail ou senha inválidos.");
             return Ok(new { token });
         }

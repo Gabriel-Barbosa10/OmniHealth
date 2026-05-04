@@ -78,6 +78,8 @@ namespace Clinica.API.Repositories
                 SELECT id_agendamento,
                        id_paciente,
                        id_terapeuta,
+                       data_hora,
+                       duracao_min,
                        status
                 FROM   agendamento
                 WHERE  id_terapeuta = @id_terapeuta
@@ -99,7 +101,9 @@ namespace Clinica.API.Repositories
                     id:          reader.GetInt32(0),
                     idPaciente:  reader.GetInt32(1),
                     idTerapeuta: reader.GetInt32(2),
-                    status:      reader.GetString(3)
+                    dataHora:    reader.GetDateTime(3),
+                    duracaoMin:  reader.GetInt32(4),
+                    status:      reader.GetString(5)
                 ));
             }
 

@@ -12,6 +12,8 @@ namespace Clinica.API.Models.Entities
         public int Id { get; private set; }
         public int IdPaciente { get; private set; }
         public int IdTerapeuta { get; private set; }
+        public DateTime DataHora { get; private set; }
+        public int DuracaoMin { get; private set; }
         public string Status { get; private set; } = string.Empty;
 
         // ── Valores permitidos (espelham CHECK do SQL) ───────────────────────
@@ -26,7 +28,7 @@ namespace Clinica.API.Models.Entities
         /// Cria uma nova instância validada de Agendamento para INSERT no banco.
         /// O status padrão é 'PENDENTE', conforme DEFAULT do SQL.
         /// </summary>
-        public static Agendamento Criar(int idPaciente, int idTerapeuta, string status = "PENDENTE")
+        public static Agendamento Criar(int idPaciente, int idTerapeuta, DateTime dataHora, int duracaoMin, string status = "PENDENTE")
         {
             // 1. FK id_paciente — NOT NULL, deve referenciar um usuario válido
             if (idPaciente <= 0)
@@ -51,6 +53,8 @@ namespace Clinica.API.Models.Entities
             {
                 IdPaciente = idPaciente,
                 IdTerapeuta = idTerapeuta,
+                DataHora = dataHora,
+                DuracaoMin = duracaoMin,
                 Status = status
             };
         }
@@ -59,7 +63,7 @@ namespace Clinica.API.Models.Entities
         /// <summary>
         /// Reconstrói a entidade a partir de uma linha do banco de dados.
         /// </summary>
-        public static Agendamento FromDatabase(int id, int idPaciente, int idTerapeuta, string status)
+        public static Agendamento FromDatabase(int id, int idPaciente, int idTerapeuta, DateTime dataHora, int duracaoMin, string status)
         {
             if (id <= 0)
                 throw new InvalidOperationException("Id inválido ao reconstruir Agendamento do banco.");
@@ -69,6 +73,8 @@ namespace Clinica.API.Models.Entities
                 Id = id,
                 IdPaciente = idPaciente,
                 IdTerapeuta = idTerapeuta,
+                DataHora = dataHora,
+                DuracaoMin = duracaoMin,
                 Status = status ?? "PENDENTE"
             };
         }

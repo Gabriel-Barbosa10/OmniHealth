@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agendar Sessão - AgendaiFisio</title>
-    <link rel="stylesheet" href="dashboards.css">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
@@ -74,12 +73,11 @@
             <div id="erroModal" class="mensagem-error-modal" style="display: none; background: #fee2e2; color: #dc2626; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
                 <span id="textoErroModal">⚠️ Por favor, escolha a data e o horário.</span>
             </div>
+
             <div class="passo">
                 <label>Especialista Confirmado</label>
                 <input type="text" id="modalEspecialista" class="input-premium" readonly style="background: #f1f5f9; cursor: not-allowed;">
             </div>
-
-            
             <div class="passo">
                 <label>Escolha o Dia</label>
                 <!-- onkeydown="return false" impede digitar a data manualmente -->
@@ -95,25 +93,6 @@
             <button id="btnConfirmarAgendamento" class="btn-confirmar-full" type="button">Confirmar Agendamento</button>
         </div>
     </dialog>
-
-    <!--MODAL SINTOMAS PACIENTE-->
-    <dialog id="modalSintomas" class="modal-moderno">
-        <div class="modal-header">Digite seus dados e no Final seus Sintomas.
-            <button class="btn-fechar-x" type="button" onclick="this.closest('dialog').close()">x</button>
-        </div>
-        <!--CAMPOS PERGUNTAS PACIENTE SINTOMAS-->
-               <select id="selectFisio" class="select-premium">
-                    <option value="" disabled selected>Selecione os seus sintomas...</option>
-                    <option value="Dores de Cabeça:">Dor de Cabeça</option>
-                    <option value="Nauseas">Nauseas Constantes</option>
-                    <option value="Dores Lombares">Dores na parte da Lombar</option>
-               </select>
-        <div class="campos_perguntas">
-            <textarea  id="textoProntuario" class="input-prontuario" placeholder="Descreva seus sintomas nesse campo para ajudar o nosso Terapeuta...">
-
-            </textarea>
-        </div>
-     </dialog>
 
     <!-- POPUP 2: SUCESSO -->
     <dialog id="modalSucesso" class="modal-moderno">
@@ -131,6 +110,37 @@
             <button id="btnProximoPasso" class="btn-confirmar-full" type="button">Continuar</button>
         </div>
     </dialog>
+<!-- POPUP 1.5: FORMULÁRIO DE SINTOMAS (TRIAGEM) -->
+<dialog id="modalTriagem" class="modal-moderno">
+    <div class="modal-header">
+        <h2>📋 Conte-nos o que sente</h2>
+        <button class="btn-fechar-x" type="button" onclick="this.closest('dialog').close()">×</button>
+    </div>
+    <div class="modal-body">
+        <!-- DIV DE ERRO ADICIONADA AQUI -->
+        <div id="erroTriagem" class="mensagem-error-modal" style="display: none; background: #fee2e2; color: #dc2626; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+            <span id="textoErroTriagem">⚠️ Por favor, descreva seus sintomas.</span>
+        </div>
+    </div>
+
+        <p style="color: #64748b; margin-bottom: 15px;">Essas informações ajudam o especialista a se preparar para sua consulta.</p>
+        
+        <div class="passo">
+               <div class="campo-selecao">
+        <label for="tiposSintomas">Sintomas</label>
+            <select class="select-premium" name="Sintomas">
+                    <option value="" disabled selected>Selecione o seu Sintomas</option>
+                    <option value="Dor de cabeça">Dor de cabeça</option>
+                    <option value="Dor na  lombar">Dor na parte Lombar</option>
+                    <option value="Dor nas costas ">Dor nas costas</option>
+            </select>
+        </div>
+    </div>
+
+        <button id="btnFinalizarTriagem" class="btn-confirmar-full" type="button" style="margin-top: 10px;">Salvar e Confirmar Agendamento</button>
+    </div>
+</dialog>
+
 
     <!-- POPUP 3: NAVEGAÇÃO PÓS-AGENDAMENTO -->
     <dialog id="modalNavegacao" class="modal-moderno">
@@ -140,7 +150,7 @@
             <p>Seu agendamento foi salvo com segurança.</p>
             
             <div class="botoes-duplos" style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
-                <a href="TelaPaciente.html" class="btn-confirmar-full" style="text-decoration: none; text-align: center;">Sim, ver minhas consultas</a>
+                <a href="../Tela Consulta Paciente/TelaPaciente.html" class="btn-confirmar-full" style="text-decoration: none; text-align: center;">Sim, ver minhas consultas</a>
                 <button onclick="location.reload()" class="btn-outline-full" type="button" style="padding: 15px; border-radius: 12px; border: 2px solid #e2e8f0; background: none; cursor: pointer; font-weight: bold;">Agendar outra sessão</button>
             </div>
         </div>

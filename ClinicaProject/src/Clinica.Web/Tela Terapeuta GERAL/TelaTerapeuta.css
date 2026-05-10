@@ -7,20 +7,16 @@
     --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-
-}
 body { 
     
-    background:  radial-gradient(circle at top right, #A7C27E, #ffffff, #A7C27E, #ffffff);
-    background-size: 400% 400%;
+    margin: 0;
     font-family: 'Inter', sans-serif;
-    padding: 40px; 
-    color: #1e293b; 
-    animation: gradientBG 3s ease infinite;
+    background-color: var(--bg-terapeuta);
+    color: var(--texto);
+    -webkit-font-smoothing: antialiased;
+    background: radial-gradient(circle at top right, #A7C27E, #ffffff, #A7C27E, #ffffff);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
 }
 
 @keyframes gradientBG {
@@ -28,6 +24,57 @@ body {
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
+.app-container { display: flex; min-height: 100vh; }
+
+.sidebar {
+    width: 260px;
+    background: var(--bg-terapeuta);
+    border-right: 1px solid var(--border);
+    padding: 2.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+.logo { 
+    font-weight: 900; 
+    font-size: 1.4rem; 
+    color: var(--primary); 
+    margin-bottom: 3rem; 
+    background: var(--bg-terapeuta);
+
+}
+nav a {
+    text-decoration: none;
+    color: var(--texto-muted);
+    padding: 12px 16px;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: block;
+    transition: var(--transition);
+    background: var(--bg-terapeuta);
+}
+
+nav a.active{ 
+    background: var(--bg-terapeuta); 
+    color: var(--brand); 
+}
+nav a:hover{
+    background: var(--primary) ;
+    border-radius: 20px;
+    transition: all 3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.user-info { 
+    border-top: 1px solid var(--border); 
+    padding-top: 2rem; 
+    margin-top: auto; 
+    background: var(--bg-terapeuta);
+
+}
+
 
 
 .titulo-pagina { 

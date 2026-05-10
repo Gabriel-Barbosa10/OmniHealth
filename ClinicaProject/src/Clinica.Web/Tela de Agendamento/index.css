@@ -23,10 +23,11 @@
 body {
     margin: 0;
     font-family: 'Inter', sans-serif;
-    background: radial-gradient(at top left, #f1f5f9, var(--bg-app));
     color: var(--texto);
     min-height: 100vh;
-    background: radial-gradient(circle at top right, var(--brand-soft), var(--bg-app) 50%);
+    background: #ffffff;
+
+
 }
 
 .navbar {
@@ -39,6 +40,9 @@ body {
     border-bottom: 1px solid #e2e8f0;
     position: sticky;
     top: 0; z-index: 100;
+}
+.navbar:hover{
+    font: white;
 }
 
 .logo { font-weight: 900; 
@@ -72,11 +76,13 @@ body {
     transform: translateY(10px);
     transition: var(--transition);
     border: 1px solid #e2e8f0;
+    color: var(--branco);
 }
 
 .perfil-container:hover .dropdown-conta {
     opacity: 1; visibility: visible;
     transform: translateY(0);
+    color: var(--branco);
 }
 
 /* Informações do Usuário no Topo do Dropdown */
@@ -111,7 +117,7 @@ body {
 
 .dropdown-conta a:hover {
     background: var(--brand-soft);
-    color: var(--brand);
+    color: var(--branco);
 }
 
 /* Cor especial para o botão Sair */
@@ -144,12 +150,16 @@ body {
     background: var(--branco);
     padding: 3rem;
     border-radius: var(--radius);
-    box-shadow: var(--shadow-soft);
+    box-shadow: var(--brand-soft);
     border: 1px solid #ffffff;
     transition: var(--transition);
 }
 
-.card-moderno:hover { transform: translateY(-8px); box-shadow: 0 30px 60px -20px rgba(0,0,0,0.1); border-color: var(--brand); }
+.card-moderno:hover { 
+    transform: translateY(-8px); 
+    box-shadow: 0 1px 15px var(--texto) ;
+    border-color: var(--brand);
+}
 
 .badge {
     width: 60%;
@@ -178,7 +188,7 @@ body {
     border: 2px solid #f1f5f9;
     background: #f8fafc;
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 300;
     outline: none;
     transition: var(--transition);
 }
@@ -202,7 +212,9 @@ body {
     display: flex; justify-content: center; align-items: center;
 }
 
-.btn-agendar-main:hover, .btn-confirmar-full:hover { transform: scale(1.02); filter: brightness(1.1); }
+.btn-agendar-main:hover, .btn-confirmar-full:hover { 
+    transform: scale(1.02); 
+    filter: brightness(1.1); }
 
 .btn-outline-full {
     width: 100%;
@@ -363,18 +375,6 @@ footer button, .body-footer-button { display: none !important; }
     border-color: var(--brand) !important;
     transform: scale(1.05);
 }
-.input-protuario{
-    width: 100%;
-    min-height: 200px;
-    padding: 1.5rem;
-    border-radius: 16px;
-    border: 2px solid var(--border);
-    background: #fcfcfd;
-    font-family: inherit;
-    font-size: 1rem;
-    line-height: 1.6;
-    resize: vertical;
-    transition: var(--transition);
-
-
+#sintomasPaciente {
+    transition: border-color 0.3s ease;
 }

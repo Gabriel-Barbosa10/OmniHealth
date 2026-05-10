@@ -4,66 +4,76 @@ const elements = {
     selectFisio: document.getElementById('selectFisio'),
     toastErro: document.getElementById('toastErro'),
     
+    // Modais
     modalAgenda: document.getElementById('modalAgenda'),
+    modalTriagem: document.getElementById('modalTriagem'),
     modalSucesso: document.getElementById('modalSucesso'),
     modalNavegacao: document.getElementById('modalNavegacao'),
-    modalSintomas: document.getElementById('modalSintomas'),
+    
+    // Elementos Internos
     modalEspecialista: document.getElementById('modalEspecialista'),
     modalData: document.getElementById('modalData'),
     gridHorarios: document.getElementById('gridHorarios'),
     btnConfirmarAgendamento: document.getElementById('btnConfirmarAgendamento'),
+    nomePaciente: document.getElementById('nomePaciente'),
+    
+    // Alertas de Erro
     erroModal: document.getElementById('erroModal'),
     textoErroModal: document.getElementById('textoErroModal'),
+    erroTriagem: document.getElementById('erroTriagem'),
     
+    // Inputs e Resumo
+    btnFinalizarTriagem: document.getElementById('btnFinalizarTriagem'),
     resumoMedico: document.getElementById('resumoMedico'),
     resumoData: document.getElementById('resumoData'),
     resumoHora: document.getElementById('resumoHora'),
-    btnProximoPasso: document.getElementById('btnProximoPasso')
+    btnProximoPasso: document.getElementById('btnProximoPasso'),
+    tiposSintomas: document.getElementById('tiposSintomas')
 };
 
 let horaSelecionada = null;
+const gradeBase = ["10:00","10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00","14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00"];
 
-const gradeBase = ["10:00","10:30", "11:00", 
-    "11:30", "12:00", "12:30", "13:00", "13:30", 
-    "14:00","14:30", "15:00", "15:30", "16:00", 
-    "16:30", "17:00", "17:30", "18:00"];
-
-const getHojeBR = () => {
-    const data = new Date();
-    data.setMinutes(data.getMinutes() - data.getTimezoneOffset());
-    return data.toISOString().split('T')[0];
+// Utilitário para pegar data ISO local corrigida
+const getHojeISO = () => {
+    const d = new Date();
+    return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().split('T')[0];
 };
 
-// --- 2. LÓGICA DE ABERTURA ---
+// --- 2. FUNÇÕES DE LIMPEZA (UX IMPROVEMENT) ---
+const resetarErros = () => {
+    elements.erroModal.style.display = "none";
+    elements.erroTriagem.style.display = "none";
+};
 
+// --- 3. LOGICA DE ABERTURA ---
 elements.btnAgendarPrincipal.onclick = () => {
     if (!elements.selectFisio.value) {
         elements.toastErro.classList.add("show");
         setTimeout(() => elements.toastErro.classList.remove("show"), 3000);
         return;
     }
-
+    
+    resetarErros();
     elements.modalEspecialista.value = elements.selectFisio.value;
-    elements.modalData.setAttribute("min", getHojeBR());
+    elements.modalData.setAttribute("min", getHojeISO());
     elements.modalData.value = "";
     elements.gridHorarios.innerHTML = "<p style='grid-column:1/-1; color:gray; text-align:center;'>Escolha uma data primeiro...</p>";
-    elements.erroModal.style.display = "none";
-    horaSelecionada = null;
-
-    document.body.style.overflow = 'hidden';
+    
+    document.body.style.overflow = 'hidden'; // Evita scroll ao fundo
     elements.modalAgenda.showModal();
-    elements.modalSintomas.showModal();
 };
 
-// --- 3. RENDERIZAÇÃO DE HORÁRIOS (LOGICA DE TEMPO REAL E BLOQUEIOS) ---
-
+// --- 4. RENDERIZAÇÃO DE HORÁRIOS ---
 elements.modalData.onchange = () => {
     const dataSel = elements.modalData.value;
     if (!dataSel) return;
-
+    
+    resetarErros();
     const agora = new Date();
-    const hojeStr = getHojeBR();
-
+    const hojeStr = getHojeISO();
+    
+    // Recupera horários já ocupados
     const agendaGlobal = JSON.parse(localStorage.getItem('agendaFisioData')) || {};
     const dadosDaData = agendaGlobal[dataSel] || {};
 
@@ -71,40 +81,31 @@ elements.modalData.onchange = () => {
     horaSelecionada = null;
     
     gradeBase.forEach(hora => {
-        const info = dadosDaData[hora] || { status: "disponivel" };
-        const isBloqueadoPeloFisio = info.status === "bloqueado";
-
-        // Lógica de Horário Passado
+        const isOcupado = dadosDaData[hora];
         let isPassado = false;
+
         if (dataSel === hojeStr) {
             const [h, m] = hora.split(':');
             const dataHoraBotao = new Date();
             dataHoraBotao.setHours(parseInt(h), parseInt(m), 0, 0);
-
-            if (dataHoraBotao <= agora) {
-                isPassado = true;
-            }
+            if (dataHoraBotao <= agora) isPassado = true;
         }
 
         const btn = document.createElement("button");
-        btn.classList.add("btn-hora");
         btn.type = "button";
+        btn.className = "btn-hora";
         
-        // ORDEM DE IMPORTÂNCIA: 1º Se passou do horário, 2º Se está bloqueado/agendado
+
+        //BLOQUEIA HORARIO JÁ SELECIONADO//
         if (isPassado) {
             btn.classList.add("encerrado"); 
             btn.disabled = true;
-            btn.innerHTML = `<small style="font-size: 10px; display: block; opacity: 0.7;">Encerrado</small>${hora}`;
-            btn.style.opacity = "0.5";
-            btn.style.cursor = "not-allowed";
-        } 
-        else if (isBloqueadoPeloFisio) {
+            btn.innerText = `Encerrado ${hora}`;
+        } else if (isOcupado) {
             btn.classList.add("ocupado"); 
             btn.disabled = true;
-            btn.innerHTML = `🚫 ${hora}`;
-            btn.style.cursor = "not-allowed";
-        } 
-        else {
+            btn.innerText = `🚫 ${hora}`;
+        } else {
             btn.classList.add("disponivel");
             btn.innerText = hora;
             btn.onclick = () => {
@@ -114,78 +115,83 @@ elements.modalData.onchange = () => {
                 elements.erroModal.style.display = "none";
             };
         }
-        
         elements.gridHorarios.appendChild(btn);
     });
 };
 
-// --- 4. CONFIRMAÇÃO (SALVAMENTO INTEGRADO) ---
+// --- 5. FLUXO DE CONFIRMAÇÃO ---
 
+// PASSO A: Validação Data/Hora -> Abre Triagem
 elements.btnConfirmarAgendamento.onclick = () => {
-    const dataRaw = elements.modalData.value;
-
-    if (!dataRaw || !horaSelecionada) {
+    if (!elements.modalData.value || !horaSelecionada) {
         elements.textoErroModal.innerText = "⚠️ Selecione a data e o horário.";
         elements.erroModal.style.display = "block";
         return;
     }
+    elements.modalAgenda.close();
+    elements.modalTriagem.showModal();
+};
 
+// PASSO B: Validação Triagem -> Salva e Sucesso
+elements.btnFinalizarTriagem.onclick = () => {
+
+
+    const dataRaw = elements.modalData.value;
     const dataFormatada = dataRaw.split("-").reverse().join("/");
 
-    // 1. Salva no histórico do paciente
     const novaConsulta = {
+        id: Date.now(),
+        nome: "Davi Gusmão",
         especialista: elements.modalEspecialista.value,
         data: dataFormatada,
+        dataISO: dataRaw,
         hora: horaSelecionada,
-        id: Date.now()
+        status: "Confirmado"
     };
+
+    // 1. Salva na lista de consultas (Tela do Paciente e Profissional)
     const consultas = JSON.parse(localStorage.getItem("consultas_fisio")) || [];
     consultas.push(novaConsulta);
     localStorage.setItem("consultas_fisio", JSON.stringify(consultas));
 
-    // 2. Salva na agenda global para o Terapeuta ver e bloquear o horário
+    // 2. Ocupa o horário na Agenda Geral
     const agendaGlobal = JSON.parse(localStorage.getItem('agendaFisioData')) || {};
     if (!agendaGlobal[dataRaw]) agendaGlobal[dataRaw] = {};
-    
-    agendaGlobal[dataRaw][horaSelecionada] = { 
-        status: "bloqueado", 
-        paciente: "Davi Gusmão" 
-    };
+    agendaGlobal[dataRaw][horaSelecionada] = true;
     localStorage.setItem('agendaFisioData', JSON.stringify(agendaGlobal));
 
-    // Feedback Visual e Transição
-    elements.modalAgenda.close();
-    setTimeout(() => {
-        elements.resumoMedico.innerText = novaConsulta.especialista;
-        elements.resumoData.innerText = novaConsulta.data;
-        elements.resumoHora.innerText = novaConsulta.hora;
-        elements.modalSucesso.showModal();
-    }, 150);
+    // 3. Atualiza Resumo e Transição
+    elements.resumoMedico.innerText = novaConsulta.especialista;
+    elements.resumoData.innerText = novaConsulta.data;
+    elements.resumoHora.innerText = novaConsulta.hora;
+
+    elements.modalTriagem.close();
+    elements.modalSucesso.showModal();
 };
 
-// --- 5. NAVEGAÇÃO E FECHAMENTO ---
-
+// PASSO C: Navegação Pós-Sucesso
 elements.btnProximoPasso.onclick = () => {
     elements.modalSucesso.close();
+    
+    // Pequeno delay para garantir que o navegador processe a fechada do modal anterior
     setTimeout(() => {
-        if(elements.modalNavegacao) elements.modalNavegacao.showModal();
+        if (elements.modalNavegacao) {
+            elements.modalNavegacao.showModal();
+        }
     }, 150);
 };
-    elements.btnConfirmarAgendamento.onclick = () =>{
-        setTimeout(() => {
-            if(elements.btnConfirmarAgendamento) elements.modalSintomas.showModal();
-        })
-    }
 
-const monitorarFechamento = (modal) => {
+// Monitorar fechamento global para restaurar o scroll do body
+const fecharDialog = (modal) => {
     if(!modal) return;
     modal.addEventListener('close', () => {
-        // Só libera o scroll se nenhum outro modal estiver aberto
-        const algumAberto = elements.modalAgenda.open || elements.modalSucesso.open || (elements.modalNavegacao && elements.modalNavegacao.open);
-        if (!algumAberto) {
-            document.body.style.overflow = 'auto';
-        }
+        const algumAberto = elements.modalAgenda.open || 
+                           elements.modalTriagem.open || 
+                           elements.modalSucesso.open || 
+                           (elements.modalNavegacao && elements.modalNavegacao.open);
+        
+        if (!algumAberto) document.body.style.overflow = 'auto';
     });
 };
 
-[elements.modalAgenda, elements.modalSucesso, elements.modalNavegacao].forEach(monitorarFechamento);
+[elements.modalAgenda, elements.modalTriagem, elements.modalSucesso, elements.modalNavegacao].forEach(fecharDialog);

@@ -21,7 +21,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--bg-gradient);
+    background: #C8DAA0;
     font-family: 'Inter', sans-serif;
 }
 
@@ -73,7 +73,9 @@ body {
     color: var(--texto-corpo);
     font-size: 0.95rem;
 }
-
+span.a{
+    color: #C8DAA0;
+}
 /* ============================================================
    FORMULÁRIOS & INPUTS
 ============================================================ */
@@ -190,7 +192,7 @@ body {
 }
 
 .auth-footer a {
-    color: var(--p-profissional);
+    color: #C8DAA0;
     text-decoration: none;
     font-weight: 700;
 }
@@ -226,4 +228,21 @@ dialog p { color: var(--texto-corpo); margin-bottom: 1.5rem; }
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+input:not(:focus):not(:placeholder-shown):invalid {
+  border-color: orange;
+}
+/* Borda e fundo do input com erro */
+.input-erro {
+    border: 2px solid #dc3545 !important;
+    background-color: #f8d7da !important;
+}
+
+/* Texto da mensagem de erro logo abaixo do input */
+.mensagem-erro-texto {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    display: block;
+    font-weight: 500;
 }
